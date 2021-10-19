@@ -1,0 +1,32 @@
+td.changed {
+    background-color: #d1e7dd !important;
+    border-color: #badbcc !important;
+    color: rgb(15, 81, 50) !important;
+}
+
+td {
+    transition: background-color 0.5s linear;
+}
+
+tr {
+    vertical-align: middle;
+    text-align: center;
+}
+
+i {
+    pointer-events: none;
+}
+
+label {
+    width: 100%;
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+#hideMessagesDropdown .dropdown-item-text {
+    display: flex;
+    align-items: center;
+}

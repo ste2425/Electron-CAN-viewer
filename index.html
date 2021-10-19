@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+
+        <link href="./styles.css" rel="stylesheet">
+        <link href="./node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="./node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <title>Hello World!</title>
+    </head>
+    <body>
+        <template id="port-list-item-template">
+            <option value="{{value}}">{{label}}</option>
+        </template>
+
+        <template id="message-filter-item-template">            
+            <li>
+                <span class="dropdown-item-text">
+                    <input type="checkbox" class="filter-chk" value="{{messageId}}" id="{{messageId}}-filter-check" />
+                    <label class="text ps-2" for="{{messageId}}-filter-check">{{messageId}}</label>
+                </span>
+            </li>
+        </template>
+
+        <template id="table-row-template">
+            <tr data-message-id="{{messageId}}">
+                <td class="message-id">{{messageId}}</td>
+                <td class="data-block">{{d1}}</td>
+                <td class="data-block">{{d2}}</td>
+                <td class="data-block">{{d3}}</td>
+                <td class="data-block">{{d4}}</td>
+                <td class="data-block">{{d5}}</td>
+                <td class="data-block">{{d6}}</td>
+                <td class="data-block">{{d7}}</td>
+                <td class="data-block">{{d8}}</td>
+                <td class="notes">
+                    <textarea></textarea>
+                </td>
+            </tr>
+        </template>
+        <div class="container mt-4">   
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link disabled" 
+                    id="messages-tab" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#messages" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="messages" 
+                    aria-selected="false"
+                    >Messages</button>
+                </li>
+                <li class="nav-item active" role="presentation">
+                  <button 
+                    class="nav-link active" 
+                    id="adapter-tab" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#adapter" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="adapter" 
+                    aria-selected="true"
+                    >Adapter Settings</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button 
+                    class="nav-link" 
+                    id="pinout-tab" 
+                    data-bs-toggle="tab" 
+                    data-bs-target="#pinout" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="pinout" 
+                    aria-selected="false"
+                    >OBD pinout</button>
+                </li>
+              </ul>
+              <div class="tab-content mt-4" id="myTabContent">
+                <div class="tab-pane fade active show" id="adapter" role="tabpanel" >                      
+                    <h3>Ports</h3>
+                    <p>
+                        Select the COM port to connect to. If there is more than one it will most likely be the one with <strong>Arduino LLC</strong> in the name.
+                    </p>
+                    <select id="portList"></select>
+                    
+                    <button class="btn btn-secondary" id="connectBTN">
+                        <i class="bi bi-upload"></i> Connect
+                    </button>
+
+                    <button class="btn btn-secondary" id="refreshPortsBTN">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh Ports
+                    </button>
+
+                    <button class="btn btn-danger" id="disconnectBTN" disabled>
+                        <i class="bi bi-x-octagon"></i> Disconnect
+                    </button>
+
+                    <h3 class="pt-3">Changing CAN speed</h3>
+                    <p>
+                        If you wish to change the CAN connection speed modify the arduino code. Change the variable <strong>CANSpeed</strong> to the desired speed.
+                    </p>
+                    <p>
+                        It is recommended to disconnect the Arduino from the vehicle before doing this. 
+                    </p>
+                    <p>
+                        I could have made this configurable but i only needed to connect to a single network so...
+                    </p>
+                    <img src="./CANSpeed.PNG" />
+
+                    <h3 class="pt-3">Uploading Arduino code</h3>
+                    <p>Have a look at the GitHub repo for information on what needs to be uploaded to the Arduino and how to hook it up to a vehicle.</p>
+                </div>
+                <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                    <div class="btn-toolbar mb-3" role="toolbar">
+                        <div class="btn-group me-2" role="group">
+                        </div>
+                        <div class="btn-group me-2" role="group">
+                            <button class="btn btn-success" id="go"><i class="bi bi-play-fill"></i> Go</button>
+                            <button class="btn btn-danger" id="stop" disabled><i class="bi bi-stop-fill"></i> Stop</button>
+                        </div>
+                        <div class="btn-group me-2">
+                            <button class="btn btn-secondary" id="clear"> <i class="bi bi-table"></i> Clear Table</button>
+                        </div>
+                        <div class="btn-group me-2">
+                            <button class="btn btn-secondary" id="expandAll"><i class="bi bi-eye-fill"></i> Show all</button>
+                        </div>
+                        <div class="btn-group me-2">
+                            <div class="dropdown" id="hideMessagesDropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-eye-slash-fill"></i> Hide messages
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                </ul>
+                              </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>                
+                                <th>Id</th>
+                                <th>D0</th>
+                                <th>D1</th>
+                                <th>D2</th>
+                                <th>D3</th>
+                                <th>D4</th>
+                                <th>D5</th>
+                                <th>D6</th>
+                                <th>D7</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pinout" role="tabpanel" aria-labelledby="pinout-tab">
+                    <div>
+                        <h3>OBD</h3>
+                        <img src="OBD.png">
+                    </div>
+                </div>
+              </div>
+
+
+        </div>
+
+        <!-- You can also require other files to run in this process -->
+        <script src="./renderer.js"></script>
+    </body>
+</html>

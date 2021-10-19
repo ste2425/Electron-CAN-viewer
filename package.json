@@ -1,0 +1,40 @@
+{
+  "name": "electron-can-viewer",
+  "version": "1.0.0",
+  "description": "Basic Electron app to view CAN messages using an Arduino as a CAN adapter",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "electron-rebuild",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "repository": "https://github.com/ste2425/Electron-CAN-viewer.git",
+  "keywords": [
+    "Electron",
+    "Arduino",
+    "CAN"
+  ],
+  "author": {
+    "name" : "Stephen Cooper",
+    "email" : "ste.cooper@live.co.uk"
+  },
+  "license": "",
+  "devDependencies": {
+    "electron": "^15.1.1",
+    "electron-builder": "^22.13.1",
+    "electron-rebuild": "^3.2.3"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "bootstrap-icons": "^1.5.0",
+    "serialport": "^9.2.4"
+  },
+  "build": {
+      "appId": "2f3fe695-104b-4c1e-bd28-207d07a61561",
+      "productName": "Electron CAN Viewer",
+      "mac": {
+          "category": "public.app-category.developer-tools"
+      }
+  }
+}
