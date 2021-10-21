@@ -2,11 +2,13 @@
 
 A very simple Electron based viewer of CAN bus network messages. It uses a simple Arduino based adapter to talk to the network. The Arduino communicates with Electron via a serial connection.
 
-Information on the Arduino side of things is found [here](./Arduino/readme.md).
-
-## Installation
+## Installation of the Electron app
 
 Download the latest release from the [Releases page](https://github.com/ste2425/Electron-CAN-viewer/releases). You may recieve warnings during download and installation as i havent signed it. If you feel more comfortable you can clone the repo and run it from source.
+
+## Configuring the Arduino
+
+Information on the Arduino side of things is found [here](./Arduino/readme.md).
 
 ## Usage
 
