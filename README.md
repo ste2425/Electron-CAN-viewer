@@ -14,11 +14,11 @@ Upon startup you will be presented with the Adapter tab. Here you can select the
 
 Should your Arduino disconnect you will be taken back to the Adapter tab.
 
-![Adapter Tab](Adapter-tab.png)
+![Adapter Tab](Adapter-tab.PNG)
 
 Once on the Messages tab you can start and stop listening for messages.
 
-![Messages Tab](Messages-tab.png)
+![Messages Tab](Messages-tab.PNG)
 
 CAN messages will be grouped in the list by their message ID, new messages overwriting the old message data. Specific value changes will be highlighted in the table via a green colour change.
 
