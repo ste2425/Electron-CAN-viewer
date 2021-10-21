@@ -25,6 +25,8 @@ window.addEventListener('DOMContentLoaded', () => {
         adapterTabBtn = document.querySelector('#adapter-tab'),
         /** @type {HTMLButtonElement} */
         disconnectBtn = document.querySelector('#disconnectBTN'),
+        /** @type {HTMLDivElement} */
+        updateAlert = document.querySelector('#autoUpdateAlert'),
         clickEvent = new Event('click', {
             bubbles: true
         });
@@ -75,6 +77,8 @@ window.addEventListener('DOMContentLoaded', () => {
             else
                 portList.dataset.path = d.path;
         }
+
+        document.querySelector('.version').textContent = d.version;
     });
 
     ipcRenderer.on(ipcEvents.portList, (e, ports) => {
@@ -99,6 +103,24 @@ window.addEventListener('DOMContentLoaded', () => {
             portList.value = portList.dataset.path;
             delete portList.dataset.path;
         }
+    });
+
+    ipcRenderer.on(ipcEvents.updateAvailable, () => {
+        updateAlert.querySelector('span').textContent = 'A new version is available and being downlaoded. You will be notified when its ready to install';
+
+        updateAlert.classList.remove('d-none');
+    });
+
+    ipcRenderer.on(ipcEvents.updateDownloaded, () => {
+        updateAlert.querySelector('span').textContent = 'A new version has been downloaded. It will automaitcally be installed next time you use this app';
+
+        const button = updateAlert.querySelector('button');
+
+        button.addEventListener('click', () => ipcRenderer.send(ipcEvents.performUpdate));
+        button.classList.remove('d-none');
+
+        updateAlert.classList.remove('d-none', 'alert-info');
+        updateAlert.classList.add('alert-success');
     });
 
     connectBtn.addEventListener('click', (e) => {

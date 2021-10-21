@@ -30,3 +30,22 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
 }
+
+#pinout img {
+    margin: 0 auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#adapter img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+.tab-content {
+    height: 100%;
+}

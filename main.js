@@ -1,7 +1,8 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const { SerialComs } = require('./SerialComs');
 const { ipcEvents } = require('./ipcEvents');
+const { autoUpdater } = require('electron-updater');
 
 const coms = new SerialComs();
 
@@ -21,6 +22,13 @@ function createWindow () {
     });
 
     mainWindow.loadFile('index.html');
+
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: 'deny' };
+    });
+    
+    autoUpdater.checkForUpdatesAndNotify();
 }
 
 /**
@@ -47,6 +55,18 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') 
     app.quit();
+});
+
+autoUpdater.on('update-available', () => {
+    sendToWindow(ipcEvents.updateAvailable);
+});
+
+autoUpdater.on('update-downloaded', () => {
+    sendToWindow(ipcEvents.updateDownloaded);
+});
+
+ipcMain.on(ipcEvents.performUpdate, () => {
+    autoUpdater.quitAndInstall();
 });
 
 ipcMain.on(ipcEvents.performPortList, async () => {
@@ -88,7 +108,8 @@ ipcMain.on(ipcEvents.performStopCANListening, () => {
 ipcMain.on(ipcEvents.performInit, () => {
     sendToWindow(ipcEvents.init, {
         connected: coms.isOpen,
-        path: coms.path
+        path: coms.path,
+        version: app.getVersion()
     });
 });
 

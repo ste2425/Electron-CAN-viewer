@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "postinstall": "electron-rebuild"
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-rebuild -f -w serialport",
+    "publish": "electron-builder -p always"
   },
   "repository": "https://github.com/ste2425/Electron-CAN-viewer/",
   "keywords": [
@@ -14,17 +16,24 @@
     "CAN"
   ],
   "author": {
-    "name" : "Stephen Cooper",
-    "email" : "ste.cooper@live.co.uk"
+    "name": "Stephen Cooper",
+    "email": "ste.cooper@live.co.uk"
   },
   "license": "",
   "devDependencies": {
     "electron": "^15.1.1",
+    "electron-builder": "^22.13.1",
     "electron-rebuild": "^3.2.3"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",
     "bootstrap-icons": "^1.5.0",
+    "electron-log": "^4.4.1",
+    "electron-updater": "^4.3.9",
     "serialport": "^9.2.4"
+  },
+  "build": {
+    "buildDependenciesFromSource": true,
+    "npmRebuild": false
   }
 }

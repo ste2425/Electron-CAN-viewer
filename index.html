@@ -9,7 +9,7 @@
         <link href="./node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
         <link href="./node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <title>Hello World!</title>
+        <title>CAN</title>
     </head>
     <body>
         <template id="port-list-item-template">
@@ -41,7 +41,12 @@
                 </td>
             </tr>
         </template>
-        <div class="container mt-4">   
+        <div class="container pt-4 d-flex flex-column h-100">   
+            <div class="alert alert-info d-none" role="alert" id="autoUpdateAlert">
+                <span></span>
+                <button class="btn btn-secondary d-none">Update Now</button>
+            </div>
+
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link disabled" 
@@ -106,13 +111,13 @@
                     <p>
                         It is recommended to disconnect the Arduino from the vehicle before doing this. 
                     </p>
-                    <p>
+                    <div class="mt-5 mb-5 alert alert-info" role="alert">
                         I could have made this configurable but i only needed to connect to a single network so...
-                    </p>
+                    </div>
                     <img src="./CANSpeed.PNG" />
 
                     <h3 class="pt-3">Uploading Arduino code</h3>
-                    <p>Have a look at the GitHub repo for information on what needs to be uploaded to the Arduino and how to hook it up to a vehicle.</p>
+                    <p>Have a look at the <a href="https://github.com/ste2425/Electron-CAN-viewer" target="_blank">GitHub repo</a> for information on what needs to be uploaded to the Arduino and how to hook it up to a vehicle.</p>
                 </div>
                 <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
                     <div class="btn-toolbar mb-3" role="toolbar">
@@ -158,14 +163,17 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="pinout" role="tabpanel" aria-labelledby="pinout-tab">
-                    <div>
+                    <div class="d-flex flex-column">
                         <h3>OBD</h3>
+                        <div class="alert alert-info" role="alert">
+                            This is the OBD pinout for my 2010 Focus. Iv'e added it simply to make my life easier! Your vehicle may not be the same.
+                        </div>
                         <img src="OBD.png">
                     </div>
                 </div>
               </div>
-
-
+              <hr>
+              <span class="version"></span>
         </div>
 
         <!-- You can also require other files to run in this process -->
