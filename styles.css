@@ -48,4 +48,5 @@ html, body {
 
 .tab-content {
     height: 100%;
+    overflow: auto;
 }

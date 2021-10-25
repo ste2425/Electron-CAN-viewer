@@ -13,7 +13,8 @@ const ipcEvents = {
     performStartCANListening: 'performStart',
     performStopCANListening: 'performStop',
     performPortList: 'performPortList',
-    performUpdate: 'performUpdate'
+    performUpdate: 'performUpdate',
+    performExport: 'performExport'
 };
 
 module.exports.ipcEvents = ipcEvents;

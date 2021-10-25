@@ -27,6 +27,10 @@ window.addEventListener('DOMContentLoaded', () => {
         disconnectBtn = document.querySelector('#disconnectBTN'),
         /** @type {HTMLDivElement} */
         updateAlert = document.querySelector('#autoUpdateAlert'),
+        /** @type {HTMLButtonElement} */
+        exportTable = document.querySelector('#exportTableBTN'),
+        /** @type {HTMLTableElement} */
+        table = document.querySelector('table'),
         clickEvent = new Event('click', {
             bubbles: true
         });
@@ -155,6 +159,25 @@ window.addEventListener('DOMContentLoaded', () => {
     disconnectBtn.addEventListener('click', () => {
         ipcRenderer.send(ipcEvents.performSerialDisconnect);
     });
+
+    exportTable.addEventListener('click', (e) => {
+        const tableData = Array.from(table.tBodies[0].rows)
+            .map(row => {
+                return {
+                    messageId: row.cells[0].textContent,
+                    D0: row.cells[1].textContent,
+                    D1: row.cells[2].textContent,
+                    D2: row.cells[3].textContent,
+                    D3: row.cells[4].textContent,
+                    D4: row.cells[5].textContent,
+                    D5: row.cells[6].textContent,
+                    D6: row.cells[7].textContent,
+                    D7: row.cells[8].textContent,
+                    notes: row.cells[9].children[0].value
+                }
+            });
+        ipcRenderer.send(ipcEvents.performExport, tableData);
+    })
 
     ipcRenderer.send(ipcEvents.performInit);    
 });

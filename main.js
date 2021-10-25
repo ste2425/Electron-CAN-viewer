@@ -1,8 +1,9 @@
-const { app, BrowserWindow, ipcMain, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, shell, dialog } = require('electron');
 const path = require('path');
 const { SerialComs } = require('./SerialComs');
 const { ipcEvents } = require('./ipcEvents');
 const { autoUpdater } = require('electron-updater');
+const { Workbook } = require('exceljs');
 
 const coms = new SerialComs();
 
@@ -14,8 +15,7 @@ coms.on(SerialComs.events.Debug, (e) => sendToWindow(ipcEvents.debugMessage, e))
 
 function createWindow () {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        show: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -27,6 +27,9 @@ function createWindow () {
         shell.openExternal(url);
         return { action: 'deny' };
     });
+
+    mainWindow.maximize();
+    mainWindow.show();
     
     autoUpdater.checkForUpdatesAndNotify();
 }
@@ -111,6 +114,53 @@ ipcMain.on(ipcEvents.performInit, () => {
         path: coms.path,
         version: app.getVersion()
     });
+});
+
+ipcMain.on(ipcEvents.performExport, async (e, tableData) => {
+    const workbook = new Workbook(),
+        workSheet = workbook.addWorksheet('Data');
+
+    workSheet.columns = [{
+        header: 'Message ID',
+        key: 'messageId'
+    }, {
+        header: 'D0',
+        key: 'D0'
+    }, {
+        header: 'D1',
+        key: 'D1'
+    },{
+        header: 'D2',
+        key: 'D2'
+    },{
+        header: 'D3',
+        key: 'D3'
+    },{
+        header: 'D4',
+        key: 'D4'
+    },{
+        header: 'D5',
+        key: 'D5'
+    },{
+        header: 'D6',
+        key: 'D6'
+    },{
+        header: 'D7',
+        key: 'D7'
+    },{
+        header: 'Notes',
+        key: 'notes'
+    }];
+
+    workSheet.addRows(tableData);
+
+    const savePath = await dialog.showSaveDialog({
+        defaultPath: 'export.xlsx',
+        filters: [{ name: 'Microsoft Excel Worksheet', extensions: ['xlsx']}]
+    });
+
+    if (!savePath.canceled)
+        workbook.xlsx.writeFile(savePath.filePath);
 });
 
 function onSerialDisconnect(e) {

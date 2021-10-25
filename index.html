@@ -142,6 +142,9 @@
                                 </ul>
                               </div>
                         </div>
+                        <div class="btn-group me-2">
+                            <button class="btn btn-secondary" id="exportTableBTN"><i class="bi bi-file-earmark-spreadsheet"></i> Export Table</button>
+                        </div>
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
@@ -165,10 +168,22 @@
                 <div class="tab-pane fade" id="pinout" role="tabpanel" aria-labelledby="pinout-tab">
                     <div class="d-flex flex-column">
                         <h3>OBD</h3>
-                        <div class="alert alert-info" role="alert">
-                            This is the OBD pinout for my 2010 Focus. Iv'e added it simply to make my life easier! Your vehicle may not be the same.
-                        </div>
+                        <p>The OBD-II specification defined standard pins on the OBD port to allow code readers to gain diagnostic data.
+                            This includes a CANBus network, <strong>CAN high on pin 6</strong> and <strong>Can low on pin 14</strong>.
+                        </p>
                         <img src="OBD.png">
+                        <p>
+                            However it also leaves a number of pins, <strong>1, 3, 8, 9, 11, 12, 13</strong> upto the manufacturer to use as they wish.
+                            Many add extra CANBus networks accessible on these extra pins running at different speeds.
+                        </p>
+                        <p>
+                            What data is available on the standard bus (pin 6 and 14) and what is available on any extra busses is down to the vehcicle manufacturer.
+                            All they need to provide on the standard bus is basic diagnostic info. Engine speed, road speed, error codes etc.
+                        </p>
+                        <p>
+                            My 2010 Focus has an extra bus available on <strong>pin 3 for CAN high</strong> and <strong>pin 11 for CAN low</strong>. This extra bus provides some useful info
+                            such as the state of the doors (open, closed, locked, dead-locked). Info on indicators, headlights etc.
+                        </p>
                     </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 {
   "name": "electron-can-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Basic Electron app to view CAN messages using an Arduino as a CAN adapter",
   "main": "main.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "bootstrap-icons": "^1.5.0",
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.9",
+    "exceljs": "^4.3.0",
     "serialport": "^9.2.4"
   },
   "build": {
