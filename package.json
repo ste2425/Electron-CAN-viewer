@@ -31,7 +31,7 @@
     "electron-log": "^4.4.1",
     "electron-updater": "^4.3.9",
     "exceljs": "^4.3.0",
-    "serialport": "^9.2.4"
+    "serialport": "^9.2.8"
   },
   "build": {
     "buildDependenciesFromSource": true,
